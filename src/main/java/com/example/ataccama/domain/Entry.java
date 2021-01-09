@@ -34,6 +34,7 @@ public class Entry {
     public Entry(String name, String pass, String database, String url, int port) {
         this.name = name;
         this.pass = pass;
+        this.database = database;
         this.url = url;
         this.port = port;
     }
@@ -86,7 +87,11 @@ public class Entry {
         this.port = port;
     }
 
-    @Override
+    public String getConnectionString() {
+        return url + ":" + port + "/" + database;
+    }
+
+    @Override //todo: finish print
     public String toString() {
         return "Entity [id=" + id + ", user=" + name + ", pass=" + pass + "]";
     }
