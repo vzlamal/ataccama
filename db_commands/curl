@@ -1,4 +1,8 @@
 curl -i --header "Content-Type: application/json" --request POST --data  '{"name":"a","pass":"pass2","url":"jdbc:postgresql://localhost","database":"db1","port":"5432"}'  http://0.0.0.0:8080/entry
+curl -i --header "Content-Type: application/json" --request POST --data  '{"name":"app","pass":"ataccama","url":"jdbc:postgresql://localhost","database":"ataccama","port":"5432"}'  http://0.0.0.0:8080/entry
 curl -i --header "Content-Type: application/json" --request POST --data  '{"name":"a","pass":"pass2","url":"jdbc:postgresql://localhost","database":"db1","port":"5432"}'  http://0.0.0.0:8080/entry/1
 curl -i http://0.0.0.0:8080/entry
 curl -i --request DELETE  http://0.0.0.0:8080/entry/1
+
+curl -i http://0.0.0.0:8080/api/entry/1
+curl -i http://0.0.0.0:8080/api/entry/1/entry

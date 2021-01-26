@@ -45,6 +45,17 @@ public class DatabaseConnectorService {
         return result;
     }
 
+    public Set<String> getColumns(Entry entry,String table) throws SQLException {
+        Connection connection = connect(entry);
+        Set<String> result = new HashSet<>();
+        ResultSet rs = connection.getMetaData().getColumns(null,null,table ,"%");
+
+        while(rs.next()){
+            result.add(rs.getString("COLUMN_NAME"));
+        }
+        return result;
+    }
+
 
     public static void main(String[] args) throws SQLException {
         DatabaseConnectorService databaseConnectorService = new DatabaseConnectorService();

@@ -16,27 +16,38 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api")
-public class apiControler {
+public class ApiControler {
     private final DatabaseConnectorService databaseConnectorService;
 
-    public apiControler(DatabaseConnectorService databaseConnectorService) {
+    public ApiControler(DatabaseConnectorService databaseConnectorService) {
         this.databaseConnectorService = databaseConnectorService;
     }
 
     @Autowired
     EntryRepository entryRepository;
 
-    @RequestMapping(value = "/entry/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<String >> getTables(@PathVariable("id") long id){
+    @RequestMapping(value = "/entry/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<String>> getTables(@PathVariable("id") long id) {
         Entry entry = entryRepository.getOne(id);
 
         try {
-            return new ResponseEntity<>( databaseConnectorService.getTables(entry), HttpStatus.OK);
+            return new ResponseEntity<>(databaseConnectorService.getTables(entry), HttpStatus.OK);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+    @RequestMapping(value = "/entry/{id}/{table}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<String>> getColumns(@PathVariable("id") long id, @PathVariable("table") String table) {
+        Entry entry = entryRepository.getOne(id);
+
+        try {
+            return new ResponseEntity<>(databaseConnectorService.getColumns(entry, table), HttpStatus.OK);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
