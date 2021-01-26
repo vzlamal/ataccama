@@ -3,6 +3,7 @@ package com.example.ataccama.rest;
 import com.example.ataccama.repository.EntryRepository;
 import com.example.ataccama.domain.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class EntryController {
 
             return new ResponseEntity<>(entries, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -51,7 +52,7 @@ public class EntryController {
                     HttpStatus.CREATED
             );
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -68,7 +69,7 @@ public class EntryController {
             updateEntryToUpdate.setPort(entry.getPort());
             return new ResponseEntity<>(entryRepository.save(updateEntryToUpdate), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -76,9 +77,9 @@ public class EntryController {
     public ResponseEntity<HttpStatus> deleteEntry(@PathVariable("id") long id) {
         try {
             entryRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
