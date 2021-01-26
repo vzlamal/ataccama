@@ -14,22 +14,8 @@ import java.util.Set;
 public class DatabaseConnectorService {
 
 
-    private Connection connect(Entry entry) {
-        Connection connection = null;
-
-        try {
-            connection = DriverManager.getConnection(entry.getConnectionString(), entry.getName(), entry.getPass());
-
-            if (connection != null) {
-                System.out.println("Connected to the PostgreSQL server successfully.");
-            } else {
-                System.out.println("Failed to make connection!");
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return connection;
+    private Connection connect(Entry entry) throws SQLException {
+        return  DriverManager.getConnection(entry.getConnectionString(), entry.getName(), entry.getPass());
     }
 
     public Set<String> getTables(Entry entry) throws SQLException {
@@ -38,19 +24,18 @@ public class DatabaseConnectorService {
 
         Set<String> result = new HashSet<>();
         while (tables.next()) {
-            System.out.println(tables.getString(3));
             result.add(tables.getString(3));
         }
         connection.close();
         return result;
     }
 
-    public Set<String> getColumns(Entry entry,String table) throws SQLException {
+    public Set<String> getColumns(Entry entry, String table) throws SQLException {
         Connection connection = connect(entry);
         Set<String> result = new HashSet<>();
-        ResultSet rs = connection.getMetaData().getColumns(null,null,table ,"%");
+        ResultSet rs = connection.getMetaData().getColumns(null, null, table, "%");
 
-        while(rs.next()){
+        while (rs.next()) {
             result.add(rs.getString("COLUMN_NAME"));
         }
         return result;
@@ -65,9 +50,9 @@ public class DatabaseConnectorService {
         DatabaseMetaData dmd = conn.getMetaData();
         ResultSet rs1 = dmd.getSchemas();
 
-            ResultSet rs2 = dmd.getTables(null, "public", "%", new String[]{"TABLE"});
-            while (rs2.next())
-                System.out.println(rs2.getString(3) + " " + rs2.getString(4));
+        ResultSet rs2 = dmd.getTables(null, "public", "%", new String[]{"TABLE"});
+        while (rs2.next())
+            System.out.println(rs2.getString(3) + " " + rs2.getString(4));
 
         conn.close();
         System.out.println("___________");

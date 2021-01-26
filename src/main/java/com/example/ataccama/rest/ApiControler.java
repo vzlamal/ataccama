@@ -32,8 +32,8 @@ public class ApiControler {
 
         try {
             return new ResponseEntity<>(databaseConnectorService.getTables(entry), HttpStatus.OK);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -44,8 +44,8 @@ public class ApiControler {
 
         try {
             return new ResponseEntity<>(databaseConnectorService.getColumns(entry, table), HttpStatus.OK);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
