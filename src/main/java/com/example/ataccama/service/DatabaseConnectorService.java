@@ -49,7 +49,7 @@ public class DatabaseConnectorService {
         if (allowList.contains(table)) {
             Connection connection = connect(entry);
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT  * FROM " + table);
+            ResultSet rs = statement.executeQuery("SELECT  * FROM " + allowList.get(allowList.indexOf(table)));
             int nColumns = rs.getMetaData().getColumnCount();
 
             List<List<String>> result = new ArrayList<>();
