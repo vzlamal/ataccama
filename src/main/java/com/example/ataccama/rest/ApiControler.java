@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("api")
@@ -27,7 +27,7 @@ public class ApiControler {
     EntryRepository entryRepository;
 
     @RequestMapping(value = "/entry/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<String>> getTables(@PathVariable("id") long id) {
+    public ResponseEntity<List<String>> getTables(@PathVariable("id") long id) {
         Entry entry = entryRepository.getOne(id);
 
         try {
@@ -37,12 +37,23 @@ public class ApiControler {
         }
     }
 
-    @RequestMapping(value = "/entry/{id}/{table}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<String>> getColumns(@PathVariable("id") long id, @PathVariable("table") String table) {
+    @RequestMapping(value = "/entry/{id}/columns/{table}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String>> getColumns(@PathVariable("id") long id, @PathVariable("table") String table) {
         Entry entry = entryRepository.getOne(id);
 
         try {
             return new ResponseEntity<>(databaseConnectorService.getColumns(entry, table), HttpStatus.OK);
+        } catch (SQLException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/entry/{id}/preview/{table}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<List<String>>> getPreview(@PathVariable("id") long id, @PathVariable("table") String table) {
+        Entry entry = entryRepository.getOne(id);
+
+        try {
+            return new ResponseEntity<>(databaseConnectorService.getPreview(entry, table), HttpStatus.OK);
         } catch (SQLException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
