@@ -33,12 +33,12 @@ public class DatabaseConnectorService {
     public List<String> getColumns(Entry entry, String table) throws SQLException {
         Connection connection = connect(entry);
         List<String> result = new ArrayList<>();
-        ResultSet rs = connection.getMetaData().getColumns(null, null, table, "%");
+        ResultSet resultSet = connection.getMetaData().getColumns(null, null, table, "%");
 
-        while (rs.next()) {
-            String columnName = rs.getString("COLUMN_NAME");
-            String dataType = rs.getString("TYPE_NAME");
-            String columnSize = rs.getString("COLUMN_SIZE");
+        while (resultSet.next()) {
+            String columnName = resultSet.getString("COLUMN_NAME");
+            String dataType = resultSet.getString("TYPE_NAME");
+            String columnSize = resultSet.getString("COLUMN_SIZE");
             result.add(columnName + ", " + dataType + ", " + columnSize);
         }
         connection.close();
@@ -50,14 +50,14 @@ public class DatabaseConnectorService {
         if (allowList.contains(table)) {
             Connection connection = connect(entry);
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT  * FROM " + allowList.get(allowList.indexOf(table)));
-            int nColumns = rs.getMetaData().getColumnCount();
+            ResultSet resultSet = statement.executeQuery("SELECT  * FROM " + allowList.get(allowList.indexOf(table)));
+            int nColumns = resultSet.getMetaData().getColumnCount();
 
             List<List<String>> result = new ArrayList<>();
-            while (rs.next()) {
+            while (resultSet.next()) {
                 List<String> tmp = new ArrayList<>();
                 for (int i = 1; i <= nColumns; i++) {
-                    tmp.add(rs.getString(i));
+                    tmp.add(resultSet.getString(i));
                 }
                 result.add(tmp);
             }
