@@ -91,8 +91,8 @@ public class Entry {
         return url + ":" + port + "/" + database;
     }
 
-    @Override //todo: finish print
+    @Override
     public String toString() {
-        return "Entity [id=" + id + ", user=" + name + ", pass=" + pass + "]";
+        return "Entity [id=" + id + ", name=" + name + ", pass=" + pass + ", url=" + url + ", database=" + database + ", port=" + port + "]";
     }
 }
