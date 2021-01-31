@@ -36,7 +36,10 @@ public class DatabaseConnectorService {
         ResultSet rs = connection.getMetaData().getColumns(null, null, table, "%");
 
         while (rs.next()) {
-            result.add(rs.getString("COLUMN_NAME"));
+            String columnName = rs.getString("COLUMN_NAME");
+            String dataType = rs.getString("TYPE_NAME");
+            String columnSize = rs.getString("COLUMN_SIZE");
+            result.add(columnName + ", " + dataType + ", " + columnSize);
         }
         connection.close();
         return result;

@@ -32,7 +32,7 @@ public class ApiControler {
 
         try {
             return new ResponseEntity<>(databaseConnectorService.getTables(entry), HttpStatus.OK);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -43,7 +43,7 @@ public class ApiControler {
 
         try {
             return new ResponseEntity<>(databaseConnectorService.getColumns(entry, table), HttpStatus.OK);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -54,7 +54,7 @@ public class ApiControler {
 
         try {
             return new ResponseEntity<>(databaseConnectorService.getPreview(entry, table), HttpStatus.OK);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
