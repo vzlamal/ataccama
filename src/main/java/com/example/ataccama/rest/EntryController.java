@@ -3,7 +3,6 @@ package com.example.ataccama.rest;
 import com.example.ataccama.repository.EntryRepository;
 import com.example.ataccama.domain.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
