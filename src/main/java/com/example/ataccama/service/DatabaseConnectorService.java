@@ -50,7 +50,7 @@ public class DatabaseConnectorService {
         if (allowList.contains(table)) {
             Connection connection = connect(entry);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT  * FROM " + allowList.get(allowList.indexOf(table)));
+            ResultSet resultSet = statement.executeQuery("SELECT  * FROM " + allowList.get(allowList.indexOf(table)) + " LIMIT 10");
             int nColumns = resultSet.getMetaData().getColumnCount();
 
             List<List<String>> result = new ArrayList<>();
