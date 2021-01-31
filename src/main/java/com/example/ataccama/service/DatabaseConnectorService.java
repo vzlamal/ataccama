@@ -43,7 +43,7 @@ public class DatabaseConnectorService {
     }
 
     public List<List<String>> getPreview(Entry entry, String table) throws SQLException {
-        List<String> allowList = List.of("entry", "meh");
+        List<String> allowList = List.of("entry", "meh", "test_table");
         if (allowList.contains(table)) {
             Connection connection = connect(entry);
             Statement statement = connection.createStatement();
@@ -52,7 +52,7 @@ public class DatabaseConnectorService {
 
             List<List<String>> result = new ArrayList<>();
             while (rs.next()) {
-               List<String > tmp = new ArrayList<>();
+                List<String> tmp = new ArrayList<>();
                 for (int i = 1; i <= nColumns; i++) {
                     tmp.add(rs.getString(i));
                 }
@@ -64,13 +64,4 @@ public class DatabaseConnectorService {
             throw new RuntimeException("Requested information from table that is not on allow list.");
         }
     }
-
-
-    public static void main(String[] args) throws SQLException {
-        DatabaseConnectorService databaseConnectorService = new DatabaseConnectorService();
-        Entry e = new Entry("app", "ataccama", "ataccama", "jdbc:postgresql://localhost", 5432);
-
-    }
-
-
 }
